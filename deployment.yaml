@@ -23,7 +23,7 @@ spec:
               port: 8000
             periodSeconds: 5
             failureThreshold: 1
-            timeoutSeconds: 1 # It is important to asset if there is any external calls in the healthz endpoint
+            timeoutSeconds: 1 # It is important to assess if there is any external calls in the healthz endpoint
             successThreshold: 1 
 
           envFrom:
