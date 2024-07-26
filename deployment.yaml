@@ -17,6 +17,12 @@ spec:
       containers:
         - name: goserver
           image: "eduardogomesf/hello-go:latest"
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            periodSeconds: 3
+            failureThreshold: 30
           livenessProbe:
             httpGet:
               path: /healthz
@@ -25,6 +31,12 @@ spec:
             failureThreshold: 1
             timeoutSeconds: 1 # It is important to assess if there is any external calls in the healthz endpoint
             successThreshold: 1 
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            periodSeconds: 3
+            failureThreshold: 1
 
           envFrom:
             - configMapRef:
