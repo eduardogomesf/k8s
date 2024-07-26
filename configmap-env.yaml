@@ -1,0 +1,7 @@
+apiVersion: v1
+Kind: ConfigMap
+metadata:
+  name: goserver-env
+data:
+  NAME: 'Any Name'
+  AGE: 'Any age'

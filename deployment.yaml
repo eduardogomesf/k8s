@@ -17,3 +17,12 @@ spec:
       containers:
         - name: goserver
           image: "eduardogomesf/hello-go:latest"
+          envFrom:
+            - configMapRef:
+                name: goserver-env
+            # The example below show how to get individual values
+            # - name: NAME
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: goserver-env
+            #       key: NAME
