@@ -20,9 +20,13 @@ spec:
           envFrom:
             - configMapRef:
                 name: goserver-env
-            # The example below show how to get individual values
-            # - name: NAME
-            #   valueFrom:
-            #     configMapKeyRef:
-            #       name: goserver-env
-            #       key: NAME
+          volumeMounts:
+            - mounthPath: "/go/myfamily"
+              name: config
+      volumes:
+        - name: config
+          configMap:
+            name: configmap-family
+            items:
+              - key: members
+                path: "family.txy"
