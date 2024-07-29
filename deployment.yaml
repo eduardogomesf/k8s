@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: goserver
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -17,12 +17,22 @@ spec:
       containers:
         - name: goserver
           image: "eduardogomesf/hello-go:latest"
+
+          resources:
+            requests: # mininum requirements
+              cpu: 100m
+              memory: 20Mi 
+            limits:
+              cpu: 500m
+              memory: 25Mi
+
           startupProbe:
             httpGet:
               path: /healthz
               port: 8000
             periodSeconds: 3
             failureThreshold: 30
+
           livenessProbe:
             httpGet:
               path: /healthz
@@ -31,6 +41,7 @@ spec:
             failureThreshold: 1
             timeoutSeconds: 1 # It is important to assess if there is any external calls in the healthz endpoint
             successThreshold: 1 
+
           readinessProbe:
             httpGet:
               path: /healthz
