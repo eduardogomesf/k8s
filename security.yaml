@@ -1,0 +1,34 @@
+# This file contains the definition of a ServiceAccount, a Role, and a RoleBinding.
+apiVersion: v1 
+kind: ServiceAccount
+metadata:
+  name: security
+
+---
+# The Role resource defines the permissions that the security ServiceAccount has over the resources in the cluster.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: security-role-read
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "watch"]
+
+---
+# The RoleBinding resource binds the security ServiceAccount to the security-role-read Role.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: security-role-binding-read
+subjects:
+- kind: ServiceAccount
+  name: security
+  namespace: default
+roleRef:
+  kind: Role
+  name: security-role-read
+  apiGroup: rbac.authorization.k8s.io
